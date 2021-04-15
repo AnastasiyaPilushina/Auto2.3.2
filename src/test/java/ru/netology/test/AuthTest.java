@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import ru.netology.data.DataGenerator;
 import ru.netology.data.Registration;
 
-import static com.codeborne.selenide.Condition.exactText;
-import static com.codeborne.selenide.Condition.text;
+import java.time.Duration;
+
+import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selenide.*;
 
 public class AuthTest {
@@ -32,7 +33,7 @@ public class AuthTest {
         $("[data-test-id='login'] input").setValue(user.getLogin());
         $("[data-test-id='password'] input").setValue(user.getPassword());
         $$("button").find(exactText("Продолжить")).click();
-        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Пользователь заблокирован")).waitUntil(Condition.visible, 15000);
+        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Пользователь заблокирован")).shouldBe(visible, Duration.ofSeconds(15));
     }
 
     @Test
@@ -41,7 +42,7 @@ public class AuthTest {
         $("[data-test-id='login'] input").setValue(user.getLogin());
         $("[data-test-id='password'] input").setValue(user.getPassword());
         $$("button").find(exactText("Продолжить")).click();
-        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Неверно указан логин или пароль")).waitUntil(Condition.visible, 15000);
+        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Неверно указан логин или пароль")).shouldBe(visible, Duration.ofSeconds(15));
     }
 
     @Test
@@ -50,7 +51,7 @@ public class AuthTest {
         $("[data-test-id='login'] input").setValue(user.getLogin());
         $("[data-test-id='password'] input").setValue(user.getPassword());
         $$("button").find(exactText("Продолжить")).click();
-        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Неверно указан логин или пароль")).waitUntil(Condition.visible, 15000);
+        $("[data-test-id=error-notification] .notification__content").shouldHave(text("Неверно указан логин или пароль")).shouldBe(visible, Duration.ofSeconds(15));
     }
 
     @Test
@@ -58,7 +59,7 @@ public class AuthTest {
         Registration user = DataGenerator.generateNewActiveValidUser();
         $("[data-test-id='password'] input").setValue(user.getPassword());
         $$("button").find(exactText("Продолжить")).click();
-        $("[data-test-id='login'] .input__sub").shouldHave(text("Поле обязательно для заполнения")).waitUntil(Condition.visible, 15000);
+        $("[data-test-id='login'] .input__sub").shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible, Duration.ofSeconds(15));
     }
 
     @Test
@@ -66,13 +67,13 @@ public class AuthTest {
         Registration user = DataGenerator.generateNewActiveValidUser();
         $("[data-test-id='login'] input").setValue(user.getLogin());
         $$("button").find(exactText("Продолжить")).click();
-        $("[data-test-id='password'] .input__sub").shouldHave(text("Поле обязательно для заполнения")).waitUntil(Condition.visible, 15000);
+        $("[data-test-id='password'] .input__sub").shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible, Duration.ofSeconds(15));
     }
 
     @Test
     void shouldNotLogInIfActiveUserEmptyLoginAndPassword() {
         $$("button").find(exactText("Продолжить")).click();
-        $("[data-test-id='login'] .input__sub").shouldHave(text("Поле обязательно для заполнения")).waitUntil(Condition.visible, 15000);
-        $("[data-test-id='password'] .input__sub").shouldHave(text("Поле обязательно для заполнения")).waitUntil(Condition.visible, 15000);
+        $("[data-test-id='login'] .input__sub").shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible, Duration.ofSeconds(15));
+        $("[data-test-id='password'] .input__sub").shouldHave(text("Поле обязательно для заполнения")).shouldBe(visible, Duration.ofSeconds(15));
     }
 }
